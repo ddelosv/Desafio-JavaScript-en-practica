@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ejercicio 1</title>
+</head>
+
+<body>
+    <div>
+        <div style="width: 40%;margin: 0 auto">
+            <h2>
+                Escríbenos !!!
+            </h2>
+            <div class="resultado" style="color:green;font-style: italic">
+            </div>
+            <form id="formulario">
+                <div>
+                    <div style="display: flex;flex-direction: column;">
+                        <label>
+                            Nombre completo
+                        </label>
+                        <input id="nombre" type="text">
+                        <p class="errorNombre" style="color:red;font-style: italic;"></p>
+                    </div>
+                    <div style="display: flex;flex-direction: column;">
+                        <label>
+                            Asunto
+                        </label>
+                        <input id="asunto" type="text">
+                        <p class="errorAsunto" style="color:red;font-style: italic;"></p>
+                    </div>
+                </div>
+                <div style="display: flex;flex-direction: column;">
+                    <label>
+                        Mensaje
+                    </label>
+                    <textarea id="mensaje"></textarea>
+                    <p class="errorMensaje" style="color:red;font-style: italic;"></p>
+                </div>
+                <div>
+                    <button id="botton" type="submit">
+                        Envíar mensaje
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        // Ejercicio 1: Desarrollar un código para validar un formulario de contacto utilizando el evento submit y las expresiones regulares.
+
+
+        let formulario = document.getElementById("formulario"); // variable formulario que obtiene el elemento y agrega el evento submit.
+        formulario.addEventListener("submit", validarCampos);
+        function validarCampos(event) { //funcion que valida los campos.
+            event.preventDefault();
+            limparError();
+            let nombre = document.querySelector("#nombre").value;
+            let asunto = document.querySelector("#asunto").value;
+            let mensaje = document.querySelector("#mensaje").value;
+
+            let resultado = validar(nombre, asunto, mensaje);
+            if (resultado === true) {
+                exito();
+            }
+        }
+
+        function limparError() { //funcion que limpia el error
+            document.querySelector(".errorNombre").innerHTML = "";
+            document.querySelector(".errorAsunto").innerHTML = "";
+            document.querySelector(".errorMensaje").innerHTML = "";
+        }
+
+        function exito() { //funcion que muestra el exito al enviar el formulario
+            document.querySelector(".resultado").innerHTML = "Enviado con exito!!";
+        }
+        function validar(nombre, asunto, mensaje) { //funcion que valida los campos que no sean vacios y no contengan caracteres especiales
+            let validacion = true;
+            let errorNombre = /[a-zA-Z]/gim; //expresion regular que solo acepta letras
+            if (errorNombre.test(nombre) === false) { //valida que el nombre solo contenga letras usando "test" que devuelve true o false
+                document.querySelector(".errorNombre").innerHTML = "El nombre solo debe contener letras";
+                validacion = false;
+            }
+
+            let errorAsunto = /[a-zA-Z]/gim;
+            if (errorAsunto.test(asunto) === false) {
+                document.querySelector(".errorAsunto").innerHTML = "El asunto solo debe contener letras";
+                validacion = false;
+            }
+
+            let errorMensaje = /[a-zA-Z]/gim;
+            if (errorAsunto.test(mensaje) === false) {
+                document.querySelector(".errorMensaje").innerHTML = "El mensaje solo debe contener letras";
+                validacion = false;
+            }
+            return validacion; //retorna la validacion y el formulario se envia con exito.
+        }
+
+    </script>
+</body>
+
+</html>
